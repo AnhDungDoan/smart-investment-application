@@ -44,14 +44,14 @@ const DiceGame = () => {
     setIsRolling(true);
     setShowResult(false);
 
-    // Animation for rolling dice
+    // Animation for rolling dice with variable speed
     const rollAnimation = setInterval(() => {
       setDiceResult([
         Math.floor(Math.random() * 6) + 1,
         Math.floor(Math.random() * 6) + 1,
         Math.floor(Math.random() * 6) + 1
       ]);
-    }, 100);
+    }, 80); // Faster animation for more excitement
 
     try {
       const response = await axios.post(`${BACKEND_URL}/api/bet`, {
@@ -59,7 +59,7 @@ const DiceGame = () => {
         betType
       });
 
-      // Stop animation and show result
+      // Stop animation and show result after 3.5 seconds
       setTimeout(() => {
         clearInterval(rollAnimation);
         setDiceResult(response.data.dice);
@@ -74,7 +74,7 @@ const DiceGame = () => {
 
         fetchBalance(account);
         fetchGameHistory();
-      }, 2000);
+      }, 3500);
 
     } catch (error) {
       clearInterval(rollAnimation);
@@ -84,7 +84,7 @@ const DiceGame = () => {
     } finally {
       setTimeout(() => {
         setIsRolling(false);
-      }, 2500);
+      }, 4000);
     }
   };
 
