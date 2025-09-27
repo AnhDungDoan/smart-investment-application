@@ -59,7 +59,7 @@ const DiceGame = () => {
         betType
       });
 
-      // Stop animation and show result after 3.5 seconds
+      // Stop animation and show result after 2 seconds
       setTimeout(() => {
         clearInterval(rollAnimation);
         setDiceResult(response.data.dice);
@@ -74,7 +74,7 @@ const DiceGame = () => {
 
         fetchBalance(account);
         fetchGameHistory();
-      }, 3500);
+      }, 2000);
 
     } catch (error) {
       clearInterval(rollAnimation);
@@ -84,7 +84,7 @@ const DiceGame = () => {
     } finally {
       setTimeout(() => {
         setIsRolling(false);
-      }, 4000);
+      }, 2500);
     }
   };
 
