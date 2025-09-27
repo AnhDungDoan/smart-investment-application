@@ -63,12 +63,15 @@ cd "$SCRIPT_DIR"
 echo ""
 print_step "Installing backend dependencies..."
 cd backend
-if [ ! -d "node_modules" ]; then
-    npm install --silent
-    print_success "Backend dependencies installed"
-else
-    print_success "Backend dependencies already installed"
+# Always clean and reinstall on new platform to avoid native module issues
+if [ -d "node_modules" ]; then
+    print_warning "Removing old node_modules to avoid platform conflicts..."
+    rm -rf node_modules package-lock.json
 fi
+npm install --silent
+# Rebuild native modules for current platform
+npm rebuild --silent
+print_success "Backend dependencies installed and native modules rebuilt"
 
 # Check backend .env file
 if [ ! -f ".env" ]; then
@@ -104,12 +107,13 @@ fi
 echo ""
 print_step "Installing frontend dependencies..."
 cd ../frontend
-if [ ! -d "node_modules" ]; then
-    npm install --silent
-    print_success "Frontend dependencies installed"
-else
-    print_success "Frontend dependencies already installed"
+# Always clean and reinstall on new platform to avoid native module issues
+if [ -d "node_modules" ]; then
+    print_warning "Removing old node_modules to avoid platform conflicts..."
+    rm -rf node_modules package-lock.json
 fi
+npm install --silent
+print_success "Frontend dependencies installed"
 
 # Check if backend is already running
 echo ""
