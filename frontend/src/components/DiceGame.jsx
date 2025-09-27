@@ -7,7 +7,7 @@ import { BACKEND_URL } from '../config/constants';
 
 const DiceGame = () => {
   const { account, balance, fetchBalance } = useWeb3();
-  const [betAmount, setBetAmount] = useState(0.01);
+  const [betAmount, setBetAmount] = useState(1);
   const [betType, setBetType] = useState('high'); // 'high' (Tài) or 'low' (Xỉu)
   const [isRolling, setIsRolling] = useState(false);
   const [diceResult, setDiceResult] = useState([1, 1, 1]);
@@ -174,23 +174,23 @@ const DiceGame = () => {
         <div className="bet-amount-control">
           <label>Bet Amount (RON)</label>
           <div className="amount-input-group">
-            <button onClick={() => setBetAmount(Math.max(0.001, betAmount - 0.01))} disabled={isRolling}>
+            <button onClick={() => setBetAmount(Math.max(0.1, betAmount - 1))} disabled={isRolling}>
               -
             </button>
             <input
               type="number"
               value={betAmount}
               onChange={(e) => setBetAmount(parseFloat(e.target.value) || 0)}
-              min="0.001"
-              step="0.01"
+              min="0.1"
+              step="0.1"
               disabled={isRolling}
             />
-            <button onClick={() => setBetAmount(betAmount + 0.01)} disabled={isRolling}>
+            <button onClick={() => setBetAmount(betAmount + 1)} disabled={isRolling}>
               +
             </button>
           </div>
           <div className="quick-amounts">
-            {[0.01, 0.05, 0.1, 0.5, 1].map(amount => (
+            {[0.1, 0.5, 1, 2, 5, 10, 100].map(amount => (
               <button
                 key={amount}
                 onClick={() => setBetAmount(amount)}
